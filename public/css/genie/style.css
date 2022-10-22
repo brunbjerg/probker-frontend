@@ -1,0 +1,121 @@
+.btn-probker-players {
+    background-color: #DAAB99;
+    font-size: 200%;
+    padding: 0px 10px;
+}
+
+/* DAAB99 */
+.btn-probker {
+    background-color: #DAAB99;
+    font-size: 200%;
+    padding: 0px 0px;
+}
+
+.btn-probker-clicked {
+    background-color: #a2370d;
+}
+
+
+table {
+    justify-content: center;
+    text-align: center;
+    border-spacing: 20px;
+}
+
+div {
+    margin: auto;
+}
+
+body {
+    background-color: #292c2a;
+    }
+
+h1 { 
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #D9D8D0;
+    justify-content: center;
+    text-align: center;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #D9D8D0;
+    text-align: center;
+}
+h3 { 
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #D9D8D0;
+    text-align: center;
+}
+h4 { 
+    display: block;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #D9D8D0;
+    text-align: center;
+}
+h5 { 
+    display: block;
+    font-size: .83em;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #D9D8D0;
+    text-align: center;
+}
+h6 { 
+    display: block;
+    font-size: .67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #D9D8D0;
+    text-align: center;
+}
+
+table {
+    border:1px solid black;
+    margin-left:auto;
+    margin-right:auto;
+    border: none;
+}
+
+
+.note {
+    font-size: 120%;
+    color: rgb(4, 4, 10);
+}
+
+p {
+    color: #D9D8D0;
+    text-align: center;
+}
+
+
+.body {
+}
