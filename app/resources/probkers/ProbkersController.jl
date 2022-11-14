@@ -14,7 +14,7 @@ struct game
 end
 
 
-const specific_game = game(2, [1,2,3,4], [5,6,7], 0, 0, [0 0], collect(8:52), 1000 )
+const specific_game = game(2, [1,2,3,4], [5,6,7], 0, 0, [0 0], collect(8:52), 1000)
 #function Probker_Function(game) 
 
 function calling_probker()
