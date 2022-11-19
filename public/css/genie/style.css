@@ -25,6 +25,37 @@ table, th, td, tr {
     background-color: #a2370d;
 }
 
+.slidecontainer {
+    width: 100%;
+  }
+  
+ .slider {
+-webkit-appearance: none;
+width: 80%;
+height: 25px;
+background: #d3d3d3;
+outline: none;
+
+
+}  
+.center {
+    text-align: center;
+}
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #DAAB99;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #DAAB99;
+    cursor: pointer;
+  }
+
 
 table {
     justify-content: center;
