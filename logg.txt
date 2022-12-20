@@ -1,0 +1,26 @@
+┌ Info: Listening on: ::1:8080
+└ @ HTTP.Servers C:\Users\brunb\.julia\packages\HTTP\aTjcj\src\Servers.jl:268
+┌ Info: Got a message
+│   client = uVrYAOmcxtmpwcfLoL5Tsg==
+│   message = Server side
+└ @ Main c:\Users\brunb\OneDrive\Skrivebord\Test_SimpleWebsockets.jl:64
+┌ Warning: WebsocketClient has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketClient.jl:54
+┌ Warning: WebsocketClient has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketClient.jl:54
+┌ Warning: WebsocketServer has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketServer.jl:66
+┌ Warning: WebsocketServer has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketServer.jl:66
+┌ Warning: WebsocketServer has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketServer.jl:66
+┌ Warning: WebsocketServer has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketServer.jl:66
+┌ Warning: WebsocketServer has no listener for :message.
+└ @ SimpleWebsockets C:\Users\brunb\.julia\packages\SimpleWebsockets\driwO\src\lib\WebsocketServer.jl:66
+┌ Info: Hey
+└ @ Main REPL[22]:1
+┌ Info: s
+└ @ Main c:\Users\brunb\OneDrive\Skrivebord\Test_SimpleWebsockets.jl:53
+┌ Info: Hello
+└ @ Main c:\Users\brunb\OneDrive\Skrivebord\Test_SimpleWebsockets.jl:54

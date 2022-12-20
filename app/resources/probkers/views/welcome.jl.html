@@ -19,6 +19,7 @@
 	<h1>Welcome to Probker!</h1>
 	<h3>Here you can calculate probabilities of poker hands</h3>
 
+
 	<h2>Number of Players</h2>
     <table>
       <tr>
@@ -267,6 +268,7 @@
     return true
     }
 
+
   function Check_If_Card_Is_In_Table(table, id){
     for(var i = 0, row; row = table.rows[i]; i++){
       for(var j = 0, cell ; cell = row.cells[j] ; j++){
@@ -276,6 +278,8 @@
       }
     }
   }
+
+
 
 
 </script>
@@ -313,26 +317,12 @@
 <div class="center">
   <button class="btn btn-probker-players" onclick="get_player_cards(); get_shared_cards();get_number_of_simulations();">Calculate</button>
 </div>
-
-<form onsubmit='event.preventDefault(); get_player_cards();'>
-  <label>Enter a Julia command:</label><br>
-  <input
-      type='text'
-      placeholder='eg. 1+1 or echo("hellooooo..")'
-      id='command'
-  />
-  <span id='result'></span><br>
-  <input type='submit' value = 'Send command'>
-</form>
-
-
-
 <script>
 
   var game_object 
 
   function get_number_of_players() {
-    document.getElementById('')
+
   }
 
   function get_player_cards() {
@@ -359,8 +349,6 @@
         }
       }
     }
-    console.log(array)
-    return array
   }
 
   function get_shared_cards() {
@@ -386,16 +374,13 @@
         }
       }
     }
-    console.log(array)
-    return array
   }
   
 
   
   function get_number_of_simulations() {
-    return 10**document.getElementById("myRange").value
+    return document.getElementById("myRange").value
   }
-  
   
 
   function calculate_button(){
@@ -403,17 +388,22 @@
                  player_cards:get_player_cards(),
                  shared_cards:get_shared_cards(), 
                  number_of_simulations:get_number_of_simulations()}
+  
+    
+
+    
+    
   }
 
-  input = document.getElementById('command');
-  result = document.getElementById('result');
-  const ws = new WebSocket('ws://localhost:8081')
-  ws.addEventListener('message', message => {
-      result.innerHTML = ` = ${message.data}`
-  })
-  function sendcommand(){
-      ws.send(input.value)
-  }
+    
+  
+
+  
+
+
+
+
+
 </script>
 
 
