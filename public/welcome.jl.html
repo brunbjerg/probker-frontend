@@ -311,28 +311,19 @@
 
 <h2>Probabilities</h2>
 <div class="center">
-  <button class="btn btn-probker-players" onclick="get_player_cards(); get_shared_cards();get_number_of_simulations();">Calculate</button>
+  <form onsubmit='event.preventDefault(); sendcommand();'>
+    <input class="btn btn-probker-players"  type='submit' value = 'Calculate'>
+  </form>
 </div>
 
-<form onsubmit='event.preventDefault(); get_player_cards();'>
-  <label>Enter a Julia command:</label><br>
-  <input
-      type='text'
-      placeholder='eg. 1+1 or echo("hellooooo..")'
-      id='command'
-  />
-  <span id='result'></span><br>
-  <input type='submit' value = 'Send command'>
-</form>
-
-
-
 <script>
-
   var game_object 
-
   function get_number_of_players() {
-    document.getElementById('')
+    for(var i = 2 ; i <= 9 ; i++){
+      if(document.getElementById("p" + i).className == "btn btn-probker-players btn-probker-clicked"){
+        return i
+      }
+    }
   }
 
   function get_player_cards() {
@@ -345,82 +336,110 @@
         if (card === null){
           array.push(0)
         } else if (card[0] == "H"){
-          card_number = Number(card.substring(card.indexOf("1"))) 
+          card_number = 0 + Number(card.slice(1))
           array.push(card_number)
         } else if (card[0] == "S"){
-          card_number = Number(card.substring(card.indexOf("1"))) + 13
+          card_number = 13 + Number(card.slice(1))
           array.push(card_number)
         } else if (card[0] == "D"){
-          card_number = Number(card.substring(card.indexOf("1"))) + 26
+          card_number = 26 + Number(card.slice(1))
           array.push(card_number)
         } else if (card[0] == "C"){
-          card_number = Number(card.substring(card.indexOf("1"))) + 39
+          card_number = 39 + Number(card.slice(1))
           array.push(card_number)
         }
       }
     }
-    console.log(array)
     return array
   }
 
   function get_shared_cards() {
     table = document.getElementById("table_flop_turn_river")
     var array = []
+    loop1:
     for(var i = 0, row; row = table.rows[i]; i++){
       for(var j = 0, cell ; cell = row.cells[j] ; j++){
         var card = cell.firstChild.getAttribute('id')
+
         if (card === null){
+
           array.push(0)
+          if(j == 0){
+            break loop1;
+          } 
         } else if (card[0] == "H"){
-          card_number = Number(card.substring(card.indexOf("1"))) 
+          card_number = Number(card.slice(1))
+
+          // if card_number == 13
           array.push(card_number)
         } else if (card[0] == "S"){
-          card_number = Number(card.substring(card.indexOf("1"))) + 13
+          card_number = Number(card.slice(1)) + 13
           array.push(card_number)
         } else if (card[0] == "D"){
-          card_number = Number(card.substring(card.indexOf("1"))) + 26
+          card_number = Number(card.slice(1)) + 26
           array.push(card_number)
         } else if (card[0] == "C"){
-          card_number = Number(card.substring(card.indexOf("1"))) + 39
+          card_number = Number(card.slice(1)) + 39
           array.push(card_number)
         }
       }
     }
-    console.log(array)
     return array
   }
-  
-
   
   function get_number_of_simulations() {
     return 10**document.getElementById("myRange").value
   }
-  
-  
 
   function calculate_button(){
-    game_object = {number_of_players:get_number_of_players(), 
-                 player_cards:get_player_cards(),
-                 shared_cards:get_shared_cards(), 
-                 number_of_simulations:get_number_of_simulations()}
+    let game_JSON = {number_of_players: get_number_of_players(),
+                player_cards: get_player_cards(), 
+                shared_cards: get_shared_cards(),
+                simulations:  get_number_of_simulations()}
+    console.log(JSON.stringify(game_JSON))
+    return JSON.stringify(game_JSON)
   }
 
   input = document.getElementById('command');
   result = document.getElementById('result');
   const ws = new WebSocket('ws://localhost:8081')
-  ws.addEventListener('message', message => {
-      result.innerHTML = ` = ${message.data}`
-  })
+  // ws.addEventListener('message', message => {
+  //     result.innerHTML = ` = ${calculate_button()}`
+  // })
   function sendcommand(){
-      ws.send(input.value)
+    // ws.send('println("test")')
+    ws.send(`${calculate_button()}`)
   }
-</script>
+  let probabilities
+  ws.addEventListener('message', (message) => {
+    probabilities = JSON.parse(message.data)
+    Create_Pie_Chart()
+    console.log('Message from server ', probabilities);
+});
 
+function Create_Pie_Chart(){
+  document.getElementById("probabilities").innerHTML = ''
+  var pie_table = document.createElement('tr')
+  for(var i = 0 ; i < probabilities.length ; i++){
+    var header = document.createElement('th');
+    header.innerHTML = `<h2>${Math.round(probabilities[i] * 100)}</h2>`;
+    document.getElementById("probabilities").appendChild(header)
+  }
+}
+
+
+
+
+
+
+
+</script>
 
 <!-- This is for later.  -->
 <h2> Pie chart for each player </h2>
-
+<div class="center">
+  <span id="probabilities"></span>
+</div>
 
 </body>
-
 </html>

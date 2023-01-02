@@ -15,3 +15,4 @@ end
 route("/") do 
   serve_static_file("welcome.jl.html")
 end
+
