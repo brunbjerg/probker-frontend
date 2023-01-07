@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 .btn-probker-players {
     background-color: #DAAB99;
     font-size: 200%;
