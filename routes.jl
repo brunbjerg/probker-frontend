@@ -20,16 +20,10 @@ end
 function Extract_Game_And_Load_Into_Struct(game_dict)
     game = Game(
         game_dict["number_of_players"],
-        game_dict["player_cards"],
-        game_dict["shared_cards"][1] == 0 ? [0] : game_dict["shared_cards"][1:3],
-        game_dict["shared_cards"][4],
-        game_dict["shared_cards"][5],
-        [0 0],
-        collect(setdiff(1:52,   game_dict["player_cards"],
-                                game_dict["shared_cards"][1:3],
-                                game_dict["shared_cards"][4],
-                                game_dict["shared_cards"][5])),
+        [game_dict["player_cards"];
+        game_dict["shared_cards"]],
         game_dict["simulations"])
+        println(game)
     return game
 end
 

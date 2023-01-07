@@ -1,2 +1,0 @@
-┌ Info: a context specific log message
-└ @ Main c:\Users\brunb\.julia\dev\Probker\src\test_socket.jl:11
