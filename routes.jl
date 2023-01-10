@@ -43,9 +43,6 @@ listen(server, :client) do ws
     end
 end
 
-function echo(val)
-    return val
-end
 
 @async serve(server, 8081)
 
