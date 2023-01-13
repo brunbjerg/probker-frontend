@@ -6,13 +6,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Genie :: The highly productive Julia web framework</title>
-  <!-- Bootstrap -->
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link href="/css/genie/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="/css/genie/style.css" rel="stylesheet">
-  <link href="/css/genie/prism.css" rel="stylesheet" />
+  <link href="/css/genie/prism.css" rel="stylesheet">
 </head>
 
 <body>
@@ -35,13 +33,40 @@
     <h2>Choose hidden players</h2>
       <table id="hidden_table"></table>
     
-
-
-
       <script>
         function setPlayers(n) {
-          document.getElementById("table_player_card").innerHTML = "";
-          document.getElementById("table_flop_turn_river").innerHTML = "";
+
+          // I should change this. I do not want to build these tables each time that I 
+          // rerun the code. How can I do this? I use these command to reset the whole
+          // thing. I would have to change the the size of the table. Does folding 
+          // method make more sense? 
+
+          // There is a more general question here? How should we handle the fact that
+          // the probabilities are misleading when the other people fold? I cannot think
+          // of any systematic way. I think that I should just leave this aspect out.
+          // Yes. I will add it later if there is some good approach in testing. 
+
+          // This means that the model assumes that players always, no matter what
+          // have random hands. This assumption is not a good one to make.
+          // Do people understand this? I really do not think so. Jonas did not seem
+          // to grasp the idea that well. Could I somehow provide a measure for this?
+          // Maybe include a number correcting for the number of folded hands? Maybe
+          // give two propabilities. The other one could make the assumption that the 
+          // remaining players have the best hands on the table and then distribute the
+          // probabilities for the folded hands onto the remaining players. Yes! This 
+          // is the best approach until now! No not the remaining players, instead all
+          // but player one. Yes, but this gets wierd when we look at many players cards
+          // instead of just
+
+          // I should also change the layout so that you always only get the information
+          // that I need. 
+
+          // First I will refactor code by seperating js from html. First I will commit
+          // to git
+
+          // This means that we need to keep track of the folded hands. 
+          // document.getElementById("table_player_card").innerHTML = "";
+          // document.getElementById("table_flop_turn_river").innerHTML = "";
           let p = "p"
           for (i = 2; i <= 9; i++) {
             var i_string = i;

@@ -5,14 +5,6 @@ using SimpleWebsockets
 using Probker
 using JSON
 
-route("/hello") do 
-  "hellose"
-end
-
-route("/test_site") do 
-  "Tests"  
-end
-
 route("/") do 
   serve_static_file("welcome.jl.html")
 end
@@ -43,6 +35,4 @@ listen(server, :client) do ws
     end
 end
 
-
 @async serve(server, 8081)
-
