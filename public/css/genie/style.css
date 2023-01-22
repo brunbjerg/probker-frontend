@@ -9,6 +9,11 @@
     padding: 0px 10px;
 }
 
+.btn-probker-players-clicked {
+    background-color: #a2370d;
+    font-size: 200%;
+    padding: 0px 10px;
+}
 table, th, td, tr {
     border: 1px solid black;
     /* border-bottom: 4px; */
