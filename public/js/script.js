@@ -1,9 +1,13 @@
+// TODO; Make every element with Bootstrap
+// TODO; Make full table function
+// TODO; Make probability table fold players. 
+// TODO; 
+
+
 function setPlayers(n) {
 
     Change_Class("button.btn.btn-probker.btn-probker-clicked", "btn-probker-clicked")
-    console.log(document.querySelectorAll("button.btn-probker"))
-    
-    console.log()
+
     let p = "p"
     for (i = 2; i <= 9; i++) {
         var i_string = i;
@@ -301,6 +305,8 @@ function sendcommand(){
     ws.send(`${calculate_button()}`)
 }
 
+
+//& I should refactor much of the codebase. It has become too nested.
 let probabilities
 ws.addEventListener('message', (message) => {
     probabilities = JSON.parse(message.data)
@@ -310,18 +316,18 @@ ws.addEventListener('message', (message) => {
 
 function Create_Probability_Table(){
     document.getElementById("probabilities").innerHTML = ''
-    var pie_table = document.createElement('tr')
     for(var i = 0 ; i < probabilities[0].length ; i++){
         var header = document.createElement('td');
         header.style.backgroundColor = "#DAAB99"
         header.setAttribute("width", "105")
         header.setAttribute("height", "85")
-        header.innerHTML = `<h1 style=color:#292c2a;">${(Math.round(probabilities[0][i] * 1000)/10).toFixed(1)}</h1>`;
+        header.setAttribute("id", `prod_td_${i + 1}`)
+        header.setAttribute("class", "prod_td")
+        header.innerHTML = `<h1 class="prod" id="prod_${i + 1}" style=color:#292c2a;">${(Math.round(probabilities[0][i] * 1000)/10).toFixed(1)}</h1>`;
         document.getElementById("probabilities").appendChild(header)
     }
 }
 
-//& I should make functions that retrieve different thing of the DOM.
 
 
 function Create_Fold_Buttons(){
@@ -480,8 +486,6 @@ window.chartColors = {
 
               return `rgba(${calc(r)}, ${calc(g)}, ${calc(b)}, ${alpha})`;
             }
-    
-
     };
     // DEPRECATED
     window.randomScalingFactor = function() {
