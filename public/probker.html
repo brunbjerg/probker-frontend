@@ -1,0 +1,138 @@
+<!-- probker_view.jl.html -->
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/prism.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="./js/jquery-3.6.3.js"></script>
+</head>
+
+<body id="body">
+  <h1>Welcome to Probker!</h1>
+
+	<h2>Number of Players</h2>
+  <div class="text-center">
+    <div class="btn-group" role="group" id="n_player_btn_group" aria-label="Basic radio toggle button group">
+      <button class="btn btn-probker-players" onclick="setPlayers(2); sendcommand()" id="p2" name="players" value="2">2</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(3); sendcommand()" id="p3" name="players" value="3">3</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(4); sendcommand()" id="p4" name="players" value="4">4</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(5); sendcommand()" id="p5" name="players" value="5">5</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(6); sendcommand()" id="p6" name="players" value="6">6</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(7); sendcommand()" id="p7" name="players" value="7">7</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(8); sendcommand()" id="p8" name="players" value="8">8</button>
+      <button class="btn btn-probker-players" onclick="setPlayers(9); sendcommand()" id="p9" name="players" value="9">9</button>
+    </div>
+  </div>
+  
+
+  <h2>Choose hidden players</h2>
+  <!-- <table id="hidden_table"></table> -->
+  <div class="text-center">
+    <div class="btn-group" role="group" id="hidden_table" aria-label="Basic radio toggle button group">
+
+    </div>
+  </div>
+
+
+  <h2>Choose Cards</h2>
+<div class="text-center">
+  <div class="btn-group-vertical">
+    <button onclick="getcard('H1c'); highlight('H1c'); sendcommand()" id="H1c" class="btn btn-probker my-card"><img src="img/card_icons/card(7).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H2c'); highlight('H2c'); sendcommand()" id="H2c" class="btn btn-probker my-card"><img src="img/card_icons/card(11).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H3c'); highlight('H3c'); sendcommand()" id="H3c" class="btn btn-probker my-card"><img src="img/card_icons/card(15).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H4c'); highlight('H4c'); sendcommand()" id="H4c" class="btn btn-probker my-card"><img src="img/card_icons/card(19).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H5c'); highlight('H5c'); sendcommand()" id="H5c" class="btn btn-probker my-card"><img src="img/card_icons/card(23).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H6c'); highlight('H6c'); sendcommand()" id="H6c" class="btn btn-probker my-card"><img src="img/card_icons/card(27).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H7c'); highlight('H7c'); sendcommand()" id="H7c" class="btn btn-probker my-card"><img src="img/card_icons/card(31).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H8c'); highlight('H8c'); sendcommand()" id="H8c" class="btn btn-probker my-card"><img src="img/card_icons/card(35).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H9c'); highlight('H9c'); sendcommand()" id="H9c" class="btn btn-probker my-card"><img src="img/card_icons/card(39).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H10c');highlight('H10c'); sendcommand()" id="H10c" class="btn btn-probker my-card"><img src="img/card_icons/card(43).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H11c');highlight('H11c'); sendcommand()" id="H11c" class="btn btn-probker my-card"><img src="img/card_icons/card(47).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H12c');highlight('H12c'); sendcommand()" id="H12c" class="btn btn-probker my-card"><img src="img/card_icons/card(51).svg" width="65" height="100"/></button>
+    <button onclick="getcard('H13c');highlight('H13c'); sendcommand()" id="H13c" class="btn btn-probker my-card"><img src="img/card_icons/card(3).svg" width="65" height="100"/></button>
+  </div>
+    <div class="btn-group-vertical">
+    <button onclick="getcard('S1c');highlight('S1c'); sendcommand()" id="S1c" class="btn btn-probker my-card"><img src="img/card_icons/card(4).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S2c');highlight('S2c'); sendcommand()" id="S2c" class="btn btn-probker my-card"><img src="img/card_icons/card(8).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S3c');highlight('S3c'); sendcommand()" id="S3c" class="btn btn-probker my-card"><img src="img/card_icons/card(12).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S4c');highlight('S4c'); sendcommand()" id="S4c" class="btn btn-probker my-card"><img src="img/card_icons/card(16).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S5c');highlight('S5c'); sendcommand()" id="S5c" class="btn btn-probker my-card"><img src="img/card_icons/card(20).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S6c');highlight('S6c'); sendcommand()" id="S6c" class="btn btn-probker my-card"><img src="img/card_icons/card(24).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S7c');highlight('S7c'); sendcommand()" id="S7c" class="btn btn-probker my-card"><img src="img/card_icons/card(28).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S8c');highlight('S8c'); sendcommand()" id="S8c" class="btn btn-probker my-card"><img src="img/card_icons/card(32).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S9c');highlight('S9c'); sendcommand()" id="S9c" class="btn btn-probker my-card"><img src="img/card_icons/card(36).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S10c');highlight('S10c'); sendcommand()" id="S10c" class="btn btn-probker my-card"><img src="img/card_icons/card(40).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S11c');highlight('S11c'); sendcommand()" id="S11c" class="btn btn-probker my-card"><img src="img/card_icons/card(44).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S12c');highlight('S12c'); sendcommand()" id="S12c" class="btn btn-probker my-card"><img src="img/card_icons/card(48).svg" width="65" height="100"/></button>
+    <button onclick="getcard('S13c');highlight('S13c'); sendcommand()" id="S13c" class="btn btn-probker my-card"><img src="img/card_icons/card(53).svg" width="65" height="100"/></button>
+  </div>
+    <div class="btn-group-vertical">
+    <button onclick="getcard('D1c');highlight('D1c'); sendcommand()" id="D1c" class="btn btn-probker my-card"><img src="img/card_icons/card(6).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D2c');highlight('D2c'); sendcommand()" id="D2c" class="btn btn-probker my-card"><img src="img/card_icons/card(10).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D3c');highlight('D3c'); sendcommand()" id="D3c" class="btn btn-probker my-card"><img src="img/card_icons/card(14).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D4c');highlight('D4c'); sendcommand()" id="D4c" class="btn btn-probker my-card"><img src="img/card_icons/card(18).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D5c');highlight('D5c'); sendcommand()" id="D5c" class="btn btn-probker my-card"><img src="img/card_icons/card(22).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D6c');highlight('D6c'); sendcommand()" id="D6c" class="btn btn-probker my-card"><img src="img/card_icons/card(26).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D7c');highlight('D7c'); sendcommand()" id="D7c" class="btn btn-probker my-card"><img src="img/card_icons/card(30).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D8c');highlight('D8c'); sendcommand()" id="D8c" class="btn btn-probker my-card"><img src="img/card_icons/card(34).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D9c');highlight('D9c'); sendcommand()" id="D9c" class="btn btn-probker my-card"><img src="img/card_icons/card(38).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D10c');highlight('D10c'); sendcommand()" id="D10c" class="btn btn-probker my-card"><img src="img/card_icons/card(42).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D11c');highlight('D11c'); sendcommand()" id="D11c" class="btn btn-probker my-card"><img src="img/card_icons/card(46).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D12c');highlight('D12c'); sendcommand()" id="D12c" class="btn btn-probker my-card"><img src="img/card_icons/card(50).svg" width="65" height="100"/></button>
+    <button onclick="getcard('D13c');highlight('D13c'); sendcommand()" id="D13c" class="btn btn-probker my-card"><img src="img/card_icons/card(2).svg" width="65" height="100"/></button>
+  </div>
+    <div class="btn-group-vertical gy-2">
+    <button onclick="getcard('C1c');highlight('C1c'); sendcommand()" id="C1c" class="btn btn-probker my-card"><img src="img/card_icons/card(5).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C2c');highlight('C2c'); sendcommand()" id="C2c" class="btn btn-probker my-card"><img src="img/card_icons/card(9).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C3c');highlight('C3c'); sendcommand()" id="C3c" class="btn btn-probker my-card"><img src="img/card_icons/card(13).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C4c');highlight('C4c'); sendcommand()" id="C4c" class="btn btn-probker my-card"><img src="img/card_icons/card(17).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C5c');highlight('C5c'); sendcommand()" id="C5c" class="btn btn-probker my-card"><img src="img/card_icons/card(21).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C6c');highlight('C6c'); sendcommand()" id="C6c" class="btn btn-probker my-card"><img src="img/card_icons/card(25).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C7c');highlight('C7c'); sendcommand()" id="C7c" class="btn btn-probker my-card"><img src="img/card_icons/card(29).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C8c');highlight('C8c'); sendcommand()" id="C8c" class="btn btn-probker my-card"><img src="img/card_icons/card(33).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C9c');highlight('C9c'); sendcommand()" id="C9c" class="btn btn-probker my-card"><img src="img/card_icons/card(37).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C10c');highlight('C10c'); sendcommand()" id="C10c" class="btn btn-probker my-card"><img src="img/card_icons/card(41).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C11c');highlight('C11c'); sendcommand()" id="C11c" class="btn btn-probker my-card"><img src="img/card_icons/card(45).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C12c');highlight('C12c'); sendcommand()" id="C12c" class="btn btn-probker my-card"><img src="img/card_icons/card(49).svg" width="65" height="100"/></button>
+    <button onclick="getcard('C13c');highlight('C13c'); sendcommand()" id="C13c" class="btn btn-probker my-card"><img src="img/card_icons/card(1).svg" width="65" height="100"/></button>
+  </div>
+  </div>
+  <h2 class="row-title">Player Cards</h2>
+
+  <div class="btn-group">
+    <table id="table_player"><table id="table_player_card"></table></span>
+
+  </div>
+
+  <h2>Flop Turn River</h2>
+  <table id="table_flop_turn_river"></table>
+
+  <h2>Number of Simulations</h2>
+
+  <div class="center">
+    <span id="number_of_simulations_displayer"><h1>"jer"</h1></span>
+    <input type="range" event="change" min="2" max="5" value="3" step="1" class="slider" id="myRange" onchange="sendcommand()">
+  </div>
+
+  <h2>Probabilities for each player</h2>
+  <div class="center">
+    <span id="probabilities"></span>
+  </div>
+
+  <h2>Pie chart for each player</h2>
+  <div class="center">
+    <canvas id="polar_hands" style="width:100%; max-width:600px"></canvas>
+  </div>
+
+  <script src="./js/script.js"></script>
+  
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script></body> -->
+</html>

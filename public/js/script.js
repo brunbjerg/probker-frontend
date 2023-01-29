@@ -1,49 +1,69 @@
 // TODO; Make every element with Bootstrap
+    //TODO; hidden table
+    //TODO; players table
+    //TODO; Flop, Turn, River table.
+    //TODO; Slider?
+    //TODO; Probabilities
 // TODO; Make full table function
 // TODO; Make probability table fold players. 
-// TODO; 
-
+// TODO; Not use JQuery
 
 function setPlayers(n) {
 
     Change_Class("button.btn.btn-probker.btn-probker-clicked", "btn-probker-clicked")
 
+
+    // This formulation should go
     let p = "p"
-    for (i = 2; i <= 9; i++) {
-        var i_string = i;
-        i_string.toString();
-        document.getElementById(p.concat(i_string)).classList.add('btn-probker-players')
-        document.getElementById(p.concat(i_string)).classList.remove('btn-probker-clicked')
+    var n_players = document.getElementById("n_player_btn_group").children
+    for (i = 0; i < n_players.length ; i++) {
+        n_players[i].classList.remove('btn-probker-clicked')
     }
     let n_string = n;
     n_string.toString()
+
     document.getElementById("hidden_table").innerHTML = ""
     document.getElementById(p.concat(n_string)).classList.toggle('btn-probker-clicked');
 
     for (i=2; i <= n + 1; i++ ) {
-        var header = document.createElement('td');
-        if(i == 2){
-            header.innerHTML = `<button onclick='Set_Hidden_Player(${i});highlight("H${i-1}")' id="H${i-1}" class="btn btn-probker-players">${i-1}</button>`;
-            document.getElementById("hidden_table").appendChild(header);
-        } else {
-            header.innerHTML = `<button onclick='Set_Hidden_Player(${i});highlight("H${i-1}")' id="H${i-1}" class="btn btn-probker-players">${i-1}</button>`;
-            document.getElementById("hidden_table").appendChild(header);
-        }
+        //& This is not a button... I want to fix this! I will finish this and create the element
 
+        var button = document.createElement("button")
+        button.classList.add("btn")
+        button.classList.add("btn-probker-players")
+        button.onclick = function hidden_functions(){
+            Set_Hidden_Player(`${i}`);
+            highlight(`H${i-1}`);
+        }
+        button.setAttribute("id", `H${i-1}`)
+        // var hidden_button = `<button onclick='Set_Hidden_Player(${i}); highlight("H${i-1}")' id="H${i-1}" class="btn btn-probker-players">${i-1}</button>`;
+        button.innerHTML = `${i-1}`
+        document.getElementById("hidden_table").appendChild(button);
     }
 
-    
+    //& How should I use classes? I could make one for each player in the 
+    //& player table.
+
+    //& I want to use classes much more than I do now! 
+    //& I use innerHTML instead of classes.
+
+
         document.getElementById("table_player_card").innerHTML = "";
         document.getElementById("table_flop_turn_river").innerHTML = "";
         const player_table = document.getElementById("table_player_card")
         let j = 0;
-        for(i = 1 ; i <= 2*n ; i++) {
+        for(i = 1 ; i <= 2 * n ; i++) {
             if ((i - 1) % 4 == 0){
                 j += 1
                 table_row = document.createElement('tr')
                 table_row.setAttribute("id", j + "_table_row")
             }
             let table_element = document.createElement('td')
+            table_element.classList.add("td-player")
+            //& That I set these attributes is a clear sign that I need to 
+            //& use classes instead. Or was it? I am not sure anymore...
+
+            //& I should fix the cards as the first thing that I do.
             table_element.setAttribute("id", i + "_table_element")
             table_element.setAttribute("width", "70")
             table_element.setAttribute("height", "105")
@@ -118,6 +138,7 @@ function Change_Class(from_class, to_class) {
 function Set_Hidden_Player(p) {
     p -= 1
     p *= 2
+    
     if (document.getElementById(p + "_table_element").innerHTML[4] =="p" ) {
     document.getElementById(p + "_table_element").innerHTML = "<h1>H</h1>"
     document.getElementById(p - 1 + "_table_element").innerHTML = "<h1>H</h1>"
@@ -131,6 +152,7 @@ function getcard(id) {
     const card = document.createElement("td");
     card.setAttribute("id", id.concat("_t"));
     const textcard = document.getElementById(id);
+    console.log(textcard)
     const clone = textcard.cloneNode(true)
     card.appendChild(clone);
     
@@ -140,9 +162,7 @@ function getcard(id) {
     for(var i = 0, row; row = table.rows[i]; i++){
         for(var j = 0, cell ; cell = row.cells[j] ; j++){
         var occupied_cell = Check_If_Card_Is_In_Table(table, id)
-        
         var occupied_cell_FTR = Check_If_Card_Is_In_Table(table_flop_turn_river, id)
-
         if (occupied_cell_FTR) {
             occupied_cell_FTR[0].innerHTML = ftr_names[occupied_cell_FTR[1]]
             break loop1;
@@ -181,6 +201,7 @@ function getcard(id) {
         }
         }
     }
+    console.log(card)
 };
 
 function full(table){

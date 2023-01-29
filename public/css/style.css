@@ -1,13 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
 .btn-probker-players {
     background-color: #DAAB99;
     font-size: 200%;
     padding: 0px 12px;
 }
+
+
+
 
 .btn-probker-players-clicked {
     background-color: #a2370d;
@@ -29,6 +27,18 @@ table, th, td, tr {
     background-color: #DAAB99;
     font-size: 200%;
     padding: 0px 0px;
+    border-radius: 3px;
+}
+
+.td-player {
+    width: 70;
+    height: 105;
+}
+
+
+.my-card {
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.1rem !important;
 }
 
 .btn-probker-clicked {
@@ -165,8 +175,4 @@ table {
 p {
     color: #D9D8D0;
     text-align: center;
-}
-
-
-.body {
 }

@@ -6,7 +6,7 @@ using Probker
 using JSON
 
 route("/") do 
-  serve_static_file("welcome.jl.html")
+  serve_static_file("probker.html")
 end
 
 function Extract_Game_And_Load_Into_Struct(game_dict)
