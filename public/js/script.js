@@ -26,104 +26,100 @@ function setPlayers(n) {
     document.getElementById(p.concat(n_string)).classList.toggle('btn-probker-clicked');
 
     for (i=2; i <= n + 1; i++ ) {
-        //& This is not a button... I want to fix this! I will finish this and create the element
-
         var button = document.createElement("button")
         button.classList.add("btn")
         button.classList.add("btn-probker-players")
-        button.onclick = function hidden_functions(){
-            Set_Hidden_Player(`${i}`);
-            highlight(`H${i-1}`);
-        }
+        if(i > 2){
+            button.classList.add("btn-probker-clicked") 
+        } 
+        button.setAttribute("onclick",`highlight("H${i-1}"); Set_Hidden_Player("${i}");`);
         button.setAttribute("id", `H${i-1}`)
-        // var hidden_button = `<button onclick='Set_Hidden_Player(${i}); highlight("H${i-1}")' id="H${i-1}" class="btn btn-probker-players">${i-1}</button>`;
         button.innerHTML = `${i-1}`
         document.getElementById("hidden_table").appendChild(button);
     }
 
-    //& How should I use classes? I could make one for each player in the 
-    //& player table.
-
-    //& I want to use classes much more than I do now! 
-    //& I use innerHTML instead of classes.
-
-
-        document.getElementById("table_player_card").innerHTML = "";
-        document.getElementById("table_flop_turn_river").innerHTML = "";
-        const player_table = document.getElementById("table_player_card")
-        let j = 0;
-        for(i = 1 ; i <= 2 * n ; i++) {
-            if ((i - 1) % 4 == 0){
-                j += 1
-                table_row = document.createElement('tr')
-                table_row.setAttribute("id", j + "_table_row")
-            }
-            let table_element = document.createElement('td')
-            table_element.classList.add("td-player")
-            //& That I set these attributes is a clear sign that I need to 
-            //& use classes instead. Or was it? I am not sure anymore...
-
-            //& I should fix the cards as the first thing that I do.
-            table_element.setAttribute("id", i + "_table_element")
-            table_element.setAttribute("width", "70")
-            table_element.setAttribute("height", "105")
-            table_element.innerHTML = `<h1>p${Math.round(i/2)}</h1>`
-            table_element.innerHTML = `<h1>p${Math.round(i/2)}</h1>`
-            table_row.appendChild(table_element)
-            if ((i - 1) % 4 == 0){
-                player_table.appendChild(table_row)
-            }
+    document.getElementById("table_player_card").innerHTML = "";
+    document.getElementById("table_flop_turn_river").innerHTML = "";
+    const player_table = document.getElementById("table_player_card")
+    let j = 0;
+    for(i = 1 ; i <= 2 * n ; i++) {
+        if ((i - 1) % 4 == 0){
+            j += 1
+            table_row = document.createElement('tr')
+            table_row.setAttribute("id", j + "_table_row")
         }
+        let table_element = document.createElement('td')
+        table_element.classList.add("td-player")
+        table_element.setAttribute("id", i + "_table_element")
+        table_element.setAttribute("width", "70")
+        table_element.setAttribute("height", "105")
+        if(i > 2){
+            table_element.innerHTML = `<h1>H</h1>`
+            table_element.innerHTML = `<h1>H</h1>`
+        } else {
+            table_element.innerHTML = `<h1>p${Math.round(i/2)}</h1>`
+            table_element.innerHTML = `<h1>p${Math.round(i/2)}</h1>`
+        }
+        table_row.appendChild(table_element)
+        if ((i - 1) % 4 == 0){
+            player_table.appendChild(table_row)
+        }
+    }
 
-        const table_flop_turn_river = document.getElementById("table_flop_turn_river")
+    const table_flop_turn_river = document.getElementById("table_flop_turn_river")
 
-        // ftr: flop_turn_river
-        let table_row_ftr = document.createElement('tr')
-        table_row_ftr.setAttribute("id", "table_flop_turn_river_row")
+    //& Question: Should the cards go into a table? Or should it not? 
 
-        let table_element_flop1 = document.createElement('td')
-        table_element_flop1.setAttribute("id", "flop_element")
-        table_element_flop1.setAttribute("width", "70")
-        table_element_flop1.setAttribute("height", "105")
-        table_element_flop1.innerHTML = `<h1>F1</h1>`
+    // ftr: flop_turn_river
+    let table_row_ftr = document.createElement('tr')
+    table_row_ftr.setAttribute("id", "table_flop_turn_river_row")
 
-        let table_element_flop2 = document.createElement('td')
-        table_element_flop2.setAttribute("id", "flop_element")
-        table_element_flop2.setAttribute("width", "70")
-        table_element_flop2.setAttribute("height", "105")
-        table_element_flop2.innerHTML = `<h1>F2</h1>`
+    let table_element_flop1 = document.createElement('td')
+    table_element_flop1.setAttribute("id", "flop_element")
+    table_element_flop1.setAttribute("width", "70")
+    table_element_flop1.setAttribute("height", "105")
+    table_element_flop1.innerHTML = `<h1>F1</h1>`
 
-        let table_element_flop3 = document.createElement('td')
-        table_element_flop3.setAttribute("id", "flop_element")
-        table_element_flop3.setAttribute("width", "70")
-        table_element_flop3.setAttribute("height", "105")
-        table_element_flop3.innerHTML = `<h1>F3</h1>`
+    let table_element_flop2 = document.createElement('td')
+    table_element_flop2.setAttribute("id", "flop_element")
+    table_element_flop2.setAttribute("width", "70")
+    table_element_flop2.setAttribute("height", "105")
+    table_element_flop2.innerHTML = `<h1>F2</h1>`
 
-        let table_element_turn = document.createElement('td')
-        table_element_turn.setAttribute("id", "turn_element")
-        table_element_turn.setAttribute("width", "70")
-        table_element_turn.setAttribute("height", "105")
-        table_element_turn.innerHTML = `<h1>T</h1>`
+    let table_element_flop3 = document.createElement('td')
+    table_element_flop3.setAttribute("id", "flop_element")
+    table_element_flop3.setAttribute("width", "70")
+    table_element_flop3.setAttribute("height", "105")
+    table_element_flop3.innerHTML = `<h1>F3</h1>`
 
-        let table_element_river = document.createElement('td')
-        table_element_river.setAttribute("id", "river_element")
-        table_element_river.setAttribute("width", "70")
-        table_element_river.setAttribute("height", "105")
-        table_element_river.innerHTML = `<h1>R</h1>`
+    let table_element_turn = document.createElement('td')
+    table_element_turn.setAttribute("id", "turn_element")
+    table_element_turn.setAttribute("width", "70")
+    table_element_turn.setAttribute("height", "105")
+    table_element_turn.innerHTML = `<h1>T</h1>`
 
-        table_row_ftr.appendChild(table_element_flop1)
-        table_row_ftr.appendChild(table_element_flop2)
-        table_row_ftr.appendChild(table_element_flop3)
-        table_row_ftr.appendChild(table_element_turn)
-        table_row_ftr.appendChild(table_element_river)
-        table_flop_turn_river.appendChild(table_row_ftr)
+    let table_element_river = document.createElement('td')
+    table_element_river.setAttribute("id", "river_element")
+    table_element_river.setAttribute("width", "70")
+    table_element_river.setAttribute("height", "105")
+    table_element_river.innerHTML = `<h1>R</h1>`
+
+    table_row_ftr.appendChild(table_element_flop1)
+    table_row_ftr.appendChild(table_element_flop2)
+    table_row_ftr.appendChild(table_element_flop3)
+    table_row_ftr.appendChild(table_element_turn)
+    table_row_ftr.appendChild(table_element_river)
+    table_flop_turn_river.appendChild(table_row_ftr)
 }
 
 function highlight(id){
+    if(card_in_table_and_full(table, table_flop_turn_river, id)){
+        return 
+    }
     document.getElementById(id).classList.toggle('btn-probker-clicked')
     if(Check_If_Card_Is_In_Table(table, id)){
         document.getElementById(id).classList.toggle('btn-probker-clicked')
-    } else if (Check_If_Card_Is_In_Table(table, id)){
+    } else if (Check_If_Card_Is_In_Table(table_flop_turn_river, id)){
         document.getElementById(id).classList.toggle('btn-probker-clicked')
     }
 }
@@ -138,13 +134,12 @@ function Change_Class(from_class, to_class) {
 function Set_Hidden_Player(p) {
     p -= 1
     p *= 2
-    
-    if (document.getElementById(p + "_table_element").innerHTML[4] =="p" ) {
-    document.getElementById(p + "_table_element").innerHTML = "<h1>H</h1>"
-    document.getElementById(p - 1 + "_table_element").innerHTML = "<h1>H</h1>"
+    if (document.getElementById(p + "_table_element").innerHTML[4] == "p") {
+        document.getElementById(p + "_table_element").innerHTML = "<h1>H</h1>"
+        document.getElementById(p - 1 + "_table_element").innerHTML = "<h1>H</h1>"
     } else {
-    document.getElementById(p + "_table_element").innerHTML = `<h1>p${p/2}</h1>`
-    document.getElementById(p - 1 + "_table_element").innerHTML = `<h1>p${p/2}</h1>`
+        document.getElementById(p + "_table_element").innerHTML = `<h1>p${p/2}</h1>`
+        document.getElementById(p - 1 + "_table_element").innerHTML = `<h1>p${p/2}</h1>`
     }
 }
 
@@ -152,17 +147,21 @@ function getcard(id) {
     const card = document.createElement("td");
     card.setAttribute("id", id.concat("_t"));
     const textcard = document.getElementById(id);
-    console.log(textcard)
     const clone = textcard.cloneNode(true)
     card.appendChild(clone);
     
+    
     var table = document.getElementById("table_player_card");
     var table_flop_turn_river = document.getElementById("table_flop_turn_river")   
+    
+    console.log(card_in_table_and_full(table, table_flop_turn_river, id))
+
     loop1:
     for(var i = 0, row; row = table.rows[i]; i++){
         for(var j = 0, cell ; cell = row.cells[j] ; j++){
         var occupied_cell = Check_If_Card_Is_In_Table(table, id)
         var occupied_cell_FTR = Check_If_Card_Is_In_Table(table_flop_turn_river, id)
+
         if (occupied_cell_FTR) {
             occupied_cell_FTR[0].innerHTML = ftr_names[occupied_cell_FTR[1]]
             break loop1;
@@ -173,9 +172,12 @@ function getcard(id) {
             occupied_cell[0].innerHTML = `<h1>p${player_number}</h1>`
             break loop1;
         } else if (cell.innerHTML[4] == "p"){
-            cell.innerHTML = document.getElementById(id).innerHTML
+            cell.innerHTML = ""
+            clone.classList.add("btn-probker-clicked")
+            cell.appendChild(clone)
             break loop1;
         } else if (occupied_cell){
+            cell.remove(clone)
             cell.innerHTML = `<h1>p${id}</h1>`
             break loop1;
         } else {
@@ -186,23 +188,45 @@ function getcard(id) {
             ftr_names = ["<h1>F1</h1>", "<h1>F2</h1>", "<h1>F3</h1>","<h1>T</h1>","<h1>R</h1>"]
             var FTR = ["F", "T", "R"]
             for(var i = 0, cell_ftr; cell_ftr = table_flop_turn_river.rows[0].cells[i] ; i++ ) {
-            var occupied_cell = Check_If_Card_Is_In_Table(table_flop_turn_river, id)
-            if (occupied_cell) {
-                console.log(occupied_cell[1])
+            var occupied_cell = Check_If_Card_Is_In_Table(table_flop_turn_river, id)     
+            if (occupied_cell) { 
                 occupied_cell[0].innerHTML = ftr_names[occupied_cell[1]]
                 break loop1;
             } else if (FTR.includes(cell_ftr.innerHTML[4]) ){
-                console.log(occupied_cell)
-                console.log(document.getElementById(id).innerHTML  )
-                cell_ftr.innerHTML = document.getElementById(id).innerHTML  
+                document.getElementById(id).classList.add("btn-probker-clicked")
+                var clone_FTR = textcard.cloneNode(true)
+                cell_ftr.replaceChildren(clone_FTR)
                 break loop1;
             }
             }
         }
         }
     }
-    console.log(card)
 };
+
+function card_in_table_and_full(table, table_flop_turn_river, id){
+    console.log(full(table))
+    console.log(full_FTR(table_flop_turn_river))
+    
+    let t_FTR_checker
+    let t_checker
+    if(Check_If_Card_Is_In_Table(table_flop_turn_river, id)){
+        t_FTR_checker = true
+    } else {
+        t_FTR_checker = false
+    }
+    if(Check_If_Card_Is_In_Table(table, id)){
+        t_checker = true
+    } else {
+        t_checker = false
+    }
+    
+        console.log(t_FTR_checker)
+        console.log(t_checker)
+
+
+    return !(t_checker || t_FTR_checker) && full(table) && full_FTR(table_flop_turn_river); 
+}
 
 function full(table){
     for(var i = 0, row; row = table.rows[i]; i++){
@@ -214,12 +238,24 @@ function full(table){
     }
     return true
 }
+
+//& I cannot do more. This is where I should start the next time.
+
+function full_FTR(table){
+    for(var i = 0, cell_ftr; cell_ftr = table.rows[0].cells[i] ; i++ ){
+        if ( (cell_ftr.innerHTML[4] == "F")  || (cell_ftr.innerHTML[4] == "T") || (cell_ftr.innerHTML[4] == "R")){
+            return false
+        }
+    }
+    return true
+}
+
     
 function Check_If_Card_Is_In_Table(table, id){
     for(var i = 0, row; row = table.rows[i]; i++){
         for(var j = 0, cell ; cell = row.cells[j] ; j++){
-            if (cell.innerHTML.substring(0, 64) == document.getElementById(id).innerHTML.substring(0, 64)){
-                return [cell, j]
+            if (cell.firstChild.getAttribute("id") == document.getElementById(id).getAttribute("id")){
+                return [cell, j, (cell.firstChild.getAttribute("id") == document.getElementById(id).getAttribute("id"))]
             }
         }
     }
@@ -328,7 +364,7 @@ function sendcommand(){
 
 
 //& I should refactor much of the codebase. It has become too nested.
-let probabilities
+var probabilities
 ws.addEventListener('message', (message) => {
     probabilities = JSON.parse(message.data)
     Create_Probability_Table()
@@ -347,6 +383,8 @@ function Create_Probability_Table(){
         header.innerHTML = `<h1 class="prod" id="prod_${i + 1}" style=color:#292c2a;">${(Math.round(probabilities[0][i] * 1000)/10).toFixed(1)}</h1>`;
         document.getElementById("probabilities").appendChild(header)
     }
+    console.log(probabilities[2])
+    make_chart(get_hand_probabilities(probabilities, 1))
 }
 
 
@@ -369,6 +407,40 @@ function Create_Fold_Buttons(){
      
     }
 }
+
+
+function get_hand_probabilities(probabilities, chosen_player){
+    console.log(probabilities)
+    var hand_prob = probabilities[2]
+    list_of_hands_probabilities = []
+    for(var i = 0 ; i < 9 ; i++){
+        list_of_hands_probabilities.push(hand_prob[i][chosen_player]/get_number_of_simulations())
+    }
+    console.log(list_of_hands_probabilities)
+    return list_of_hands_probabilities
+}
+
+function make_chart(data){
+    const ctx = document.getElementById("chart").getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'polarArea',
+      data: {
+        labels: ["Straight Flush", "Four Of A Kind", "Full House", "Flush", "Straight",
+         "Three Of A Kind", "Two Pairs", "Two Of A Kind", "High Card"],
+        datasets: [{
+          label: 'food Items',
+    
+          data: data,
+          backgroundColor: ["#0074D9", "#FF4136", "#2ECC40",
+          "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00",
+          "#001f3f", "#39CCCC", "#01FF70", "#85144b",
+          "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
+        }]
+      },
+    });
+}
+
+
 
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
