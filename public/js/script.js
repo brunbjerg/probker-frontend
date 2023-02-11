@@ -1,12 +1,6 @@
 // TODO; Make every element with Bootstrap
-    //TODO; hidden table
-    //TODO; players table
-    //TODO; Flop, Turn, River table.
-    //TODO; Slider?
     //TODO; Probabilities
-// TODO; Make full table function
 // TODO; Make probability table fold players. 
-// TODO; Not use JQuery
 
 function setPlayers(n) {
 
@@ -384,6 +378,7 @@ function Create_Probability_Table(){
         document.getElementById("probabilities").appendChild(header)
     }
     console.log(probabilities[2])
+    //! Change code here to handle different players.
     make_chart(get_hand_probabilities(probabilities, 1))
 }
 
@@ -420,273 +415,43 @@ function get_hand_probabilities(probabilities, chosen_player){
     return list_of_hands_probabilities
 }
 
-function make_chart(data){
-    const ctx = document.getElementById("chart").getContext('2d');
-    const myChart = new Chart(ctx, {
-      type: 'polarArea',
-      data: {
-        labels: ["Straight Flush", "Four Of A Kind", "Full House", "Flush", "Straight",
-         "Three Of A Kind", "Two Pairs", "Two Of A Kind", "High Card"],
-        datasets: [{
-          label: 'food Items',
-    
-          data: data,
-          backgroundColor: ["#0074D9", "#FF4136", "#2ECC40",
-          "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00",
-          "#001f3f", "#39CCCC", "#01FF70", "#85144b",
-          "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
-        }]
-      },
-    });
-}
 
 
 
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-//&&&&&&&&&&         Pie chart for later         &&&&&&&&&&
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
-window.chartColors = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
-};
-
-//& I should make it so the when we press the players, then the player disappears. 
-//& Hmm... but we already remove cards from players in this way. 
-//& New game button could also be an option. Hmm... I feel stuck... I should make a decision. 
-//& Can I somehow encode more functionality into the existing buttons?
-    //& The simplest way would be to make the set_players function reset everything and make a new game.
-    //& Pressing the player card table when there are no player in there could make the player fold.
-
-//& Should I rethink the whole js code? 
-
-//& I could put a fold button on either side of the player card table. This is the best idea so far.
-//& Should I be put it in the same table? I should read a design guide. 
-
-(function(global) {
-    var MONTHS = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ];
-    var COLORS = [
-        '#4dc9f6',
-        '#f67019',
-        '#f53794',
-        '#537bc4',
-        '#acc236',
-        '#166a8f',
-        '#00a950',
-        '#58595b',
-        '#8549ba'
-    ];
-    var Samples = global.Samples || (global.Samples = {});
-    var Color = global.Color;
-    Samples.utils = {
-        // Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
-        srand: function(seed) {
-            this._seed = seed;
-        },
-
-        rand: function(min, max) {
-            var seed = this._seed;
-            min = min === undefined ? 0 : min;
-            max = max === undefined ? 1 : max;
-            this._seed = (seed * 9301 + 49297) % 233280;
-            return min + (this._seed / 233280) * (max - min);
-        },
-        numbers: function(config) {
-            var cfg = config || {};
-            var min = cfg.min || 0;
-            var max = cfg.max || 1;
-            var from = cfg.from || [];
-            var count = cfg.count || 8;
-            var decimals = cfg.decimals || 8;
-            var continuity = cfg.continuity || 1;
-            var dfactor = Math.pow(10, decimals) || 0;
-            var data = [];
-            var i, value;
-
-            for (i = 0; i < count; ++i) {
-                value = (from[i] || 0) + this.rand(min, max);
-                if (this.rand() <= continuity) {
-                    data.push(Math.round(dfactor * value) / dfactor);
-                } else {
-                    data.push(null);
-                }
-            }
-
-            return data;
-        },
-        labels: function(config) {
-            var cfg = config || {};
-            var min = cfg.min || 0;
-            var max = cfg.max || 100;
-            var count = cfg.count || 8;
-            var step = (max - min) / count;
-            var decimals = cfg.decimals || 8;
-            var dfactor = Math.pow(10, decimals) || 0;
-            var prefix = cfg.prefix || '';
-            var values = [];
-            var i;
-
-            for (i = min; i < max; i += step) {
-                values.push(prefix + Math.round(dfactor * i) / dfactor);
-            }
-
-            return values;
-        },
-        months: function(config) {
-            var cfg = config || {};
-            var count = cfg.count || 12;
-            var section = cfg.section;
-            var values = [];
-            var i, value;
-
-            for (i = 0; i < count; ++i) {
-                value = MONTHS[Math.ceil(i) % 12];
-                values.push(value.substring(0, section));
-            }
-
-            return values;
-        },
-        color: function(index) {
-            return COLORS[index % COLORS.length];
-        },
-
-        //transparentize: function(color, opacity) {
-        //  var alpha = opacity === undefined ? 0.5 : 1 - opacity;
-        //  return ColorO(color).alpha(alpha).rgbString();
-        //}
-        transparentize: function (r, g, b, alpha) {
-              const a = (1 - alpha) * 255;
-              const calc = x => Math.round((x - a)/alpha);
-
-              return `rgba(${calc(r)}, ${calc(g)}, ${calc(b)}, ${alpha})`;
-            }
-    };
-    // DEPRECATED
-    window.randomScalingFactor = function() {
-        return Math.round(Samples.utils.rand(-100, 100));
-    };
-    // INITIALIZATION
-    Samples.utils.srand(Date.now());
-
-}(this));
-
-const DATA_COUNT = 9;
-const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
-const labels = ['High Card', 
-                'Two Kinds', 
-                'Two Pairs', 
-                'Three Kinds', 
-                'Straight',
-                'Flush',
-                'Full House',
-                'Four Kinds',
-                'Straight Flush'
-        ];
-const data = {
-labels: labels,
-datasets: [
-    {
-    label: 'Dataset 1',
-    data: [100, 50, 50, 50, 50, 50, 50, 50, 50],
-    backgroundColor: [
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-        Samples.utils.transparentize(255, 255, 255, 0.5),
-    ]
+function make_chart(probs){
+    var ctx = document.getElementById('chart');
+    console.log(probs)
+    var probs_100 = []
+    for(var i = 0 ; i < 9 ; i++ ){
+        probs_100.push(probs[i] * 100)  
     }
-]
-};
 
-
-const actions = [
-    {
-        name: 'Randomize',
-        handler(chart) {
-            chart.data.datasets.forEach(dataset => {
-                dataset.data = Samples.utils.numbers({count: chart.data.labels.length, min: 0, max: 100});
-            });
-            chart.update();
-        }
-    },
-    {
-      name: 'Add Data',
-      handler(chart) {
-        const data = chart.data;
-        if (data.datasets.length > 0) {
-          data.labels.push('data #' + (data.labels.length + 1));
-  
-          for (let index = 0; index < data.datasets.length; ++index) {
-            data.datasets[index].data.push(Samples.utils.rand(0, 100));
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [ 'Straight Flush', 
+                    'Four of a Kind', 
+                    'Full House', 
+                    'Flush', 
+                    'Straight', 
+                    'Three of a Kind',
+                    'Two Pairs',
+                    'Two of a Kind',
+                    'High Card'],
+          datasets: [{
+            label: 'Probability',
+            data: probs_100,
+            borderColor: '#DAAB99',
+            backgroundColor: '#DAAB99',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
-  
-          chart.update();
         }
-      }
-    },
-    {
-      name: 'Remove Data',
-      handler(chart) {
-        chart.data.labels.splice(-1, 1); // remove the label first
-  
-        chart.data.datasets.forEach(dataset => {
-          dataset.data.pop();
-        });
-  
-        chart.update();
-      }
-    }
-  ];
-
-
-new Chart("polar_hands", {
-    type: 'polarArea',
-    data: data,
-    options: {
-        responsive: true,
-        scales: {
-            r: {
-              pointLabels: {
-                display: true,
-                centerPointLabels: true,
-                font: {
-                  size: 100
-                }
-              }
-            }
-          },
-        plugins: {
-        legend: {
-            position: 'top',
-        },
-        title: {
-            display: true,
-            text: 'Chart.js Polar Area Chart'
-        }
-        }
-    },
-});
+      });
+}
