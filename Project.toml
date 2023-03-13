@@ -1,12 +1,11 @@
 name = "ProbkerApp"
 uuid = "54a1f243-e159-45dd-a67c-1d36492ea48f"
 authors = ["Christian Brunbjerg Jespersen <brunbjerg1423@live.dk>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 Genie = "c43c736e-a2d1-11e8-161f-af95117fbd1e"
-Inflector = "6d011eab-0732-4556-8808-e463c76bf3b6"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
 Probker = "d0ae23fd-a9a3-4625-bb1d-fa5e90ff7a39"

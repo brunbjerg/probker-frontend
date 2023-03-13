@@ -14,6 +14,7 @@ function Extract_Game_And_Load_Into_Struct(game_dict)
         game_dict["number_of_players"],
         [game_dict["player_cards"];
         game_dict["shared_cards"]],
+        game_dict["folded_cards"],
         game_dict["simulations"])
         println(game)
     return game
@@ -27,12 +28,13 @@ listen(server, :client) do ws
             game = Extract_Game_And_Load_Into_Struct(game_dict)
             probabilities = Simulate(game)
             probabilities_JSON = JSON.json(probabilities)
+            println(probabilities_JSON)
             send(ws, probabilities_JSON)
         catch err
-            @info err          
+            @info err
             send(ws, "Could not run command")
         end
     end
 end
 
-@async serve(server, 8081)
+@async serve(server, 8082)

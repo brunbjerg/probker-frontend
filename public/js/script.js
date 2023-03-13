@@ -1,11 +1,20 @@
-// TODO; Make every element with Bootstrap
-    //TODO; Probabilities
-// TODO; Make probability table fold players. 
+input = document.getElementById('command');
+result = document.getElementById('result');
+var fold_array
+const ws = new WebSocket('ws://localhost:8082')
+var probabilities
+
+// TODO fix straight; when player one has a straight there is still a 
+// TODO chance that here wins with three of a kind, two pairs and two of a kind.
+// TODO Make stacked bar chart
+// TODO Use bar chart to debug 
+// TODO Test ace in straight flush
+
 
 function setPlayers(n) {
-
+    fold_array = new Array(2 * n).fill(false);
     Change_Class("button.btn.btn-probker.btn-probker-clicked", "btn-probker-clicked")
-
+    make_chart()
 
     // This formulation should go
     let p = "p"
@@ -48,11 +57,11 @@ function setPlayers(n) {
         table_element.setAttribute("width", "70")
         table_element.setAttribute("height", "105")
         if(i > 2){
-            table_element.innerHTML = `<h1>H</h1>`
-            table_element.innerHTML = `<h1>H</h1>`
+            table_element.innerHTML = `<h1 class="hidden">H</h1>`
+            table_element.innerHTML = `<h1 class="hidden">H</h1>`
         } else {
-            table_element.innerHTML = `<h1>p${Math.round(i/2)}</h1>`
-            table_element.innerHTML = `<h1>p${Math.round(i/2)}</h1>`
+            table_element.innerHTML = `<h1 class="player">p${Math.round(i/2)}</h1>`
+            table_element.innerHTML = `<h1 class="player">p${Math.round(i/2)}</h1>`
         }
         table_row.appendChild(table_element)
         if ((i - 1) % 4 == 0){
@@ -104,7 +113,10 @@ function setPlayers(n) {
     table_row_ftr.appendChild(table_element_turn)
     table_row_ftr.appendChild(table_element_river)
     table_flop_turn_river.appendChild(table_row_ftr)
+
 }
+
+
 
 function highlight(id){
     if(card_in_table_and_full(table, table_flop_turn_river, id)){
@@ -128,28 +140,24 @@ function Change_Class(from_class, to_class) {
 function Set_Hidden_Player(p) {
     p -= 1
     p *= 2
-    if (document.getElementById(p + "_table_element").innerHTML[4] == "p") {
-        document.getElementById(p + "_table_element").innerHTML = "<h1>H</h1>"
-        document.getElementById(p - 1 + "_table_element").innerHTML = "<h1>H</h1>"
+    if (document.getElementById(`${p}_table_element`).firstElementChild.classList == "player") {
+        document.getElementById(p + "_table_element").innerHTML = "<h1 class='hidden'>H</h1>"
+        document.getElementById(p - 1 + "_table_element").innerHTML = "<h1 class='hidden'>H</h1>"
     } else {
-        document.getElementById(p + "_table_element").innerHTML = `<h1>p${p/2}</h1>`
-        document.getElementById(p - 1 + "_table_element").innerHTML = `<h1>p${p/2}</h1>`
+        document.getElementById(p + "_table_element").innerHTML = `<h1 class='player'>p${p/2}</h1>`
+        document.getElementById(p - 1 + "_table_element").innerHTML = `<h1 class='player'>p${p/2}</h1>`
     }
 }
 
 function getcard(id) {
+    console.log(fold_array)
     const card = document.createElement("td");
-    card.setAttribute("id", id.concat("_t"));
+    card.setAttribute("id", `${id}_t`);
     const textcard = document.getElementById(id);
     const clone = textcard.cloneNode(true)
     card.appendChild(clone);
-    
-    
     var table = document.getElementById("table_player_card");
     var table_flop_turn_river = document.getElementById("table_flop_turn_river")   
-    
-    console.log(card_in_table_and_full(table, table_flop_turn_river, id))
-
     loop1:
     for(var i = 0, row; row = table.rows[i]; i++){
         for(var j = 0, cell ; cell = row.cells[j] ; j++){
@@ -163,22 +171,22 @@ function getcard(id) {
         if (occupied_cell) {
             var player_number = occupied_cell[0].getAttribute("id").slice(0,1)
             player_number = number_to_player(player_number)
-            occupied_cell[0].innerHTML = `<h1>p${player_number}</h1>`
+            occupied_cell[0].innerHTML = `<h1 class='player'>p${player_number}</h1>`
             break loop1;
-        } else if (cell.innerHTML[4] == "p"){
+            //! Change this to be class based instead of this filth.
+        } else if (cell.firstElementChild.classList == "player"){
             cell.innerHTML = ""
             clone.classList.add("btn-probker-clicked")
             cell.appendChild(clone)
             break loop1;
         } else if (occupied_cell){
             cell.remove(clone)
-            cell.innerHTML = `<h1>p${id}</h1>`
+            cell.innerHTML = `<h1 class='player'>p${id}</h1>`
             break loop1;
         } else {
             if (!full(table)) {
                 continue
             }
-
             ftr_names = ["<h1>F1</h1>", "<h1>F2</h1>", "<h1>F3</h1>","<h1>T</h1>","<h1>R</h1>"]
             var FTR = ["F", "T", "R"]
             for(var i = 0, cell_ftr; cell_ftr = table_flop_turn_river.rows[0].cells[i] ; i++ ) {
@@ -199,9 +207,6 @@ function getcard(id) {
 };
 
 function card_in_table_and_full(table, table_flop_turn_river, id){
-    console.log(full(table))
-    console.log(full_FTR(table_flop_turn_river))
-    
     let t_FTR_checker
     let t_checker
     if(Check_If_Card_Is_In_Table(table_flop_turn_river, id)){
@@ -214,18 +219,15 @@ function card_in_table_and_full(table, table_flop_turn_river, id){
     } else {
         t_checker = false
     }
-    
-        console.log(t_FTR_checker)
-        console.log(t_checker)
-
-
     return !(t_checker || t_FTR_checker) && full(table) && full_FTR(table_flop_turn_river); 
 }
 
 function full(table){
     for(var i = 0, row; row = table.rows[i]; i++){
         for(var j = 0, cell ; cell = row.cells[j] ; j++){
-            if ( (cell.innerHTML[4] == "p") ){
+            //! Should be class based. Damn I will break the code 
+            //! soon.
+            if ( (cell.firstElementChild.classList == "player") ){
                 return false
             }
         }
@@ -237,6 +239,7 @@ function full(table){
 
 function full_FTR(table){
     for(var i = 0, cell_ftr; cell_ftr = table.rows[0].cells[i] ; i++ ){
+        //! Should also be changed at some point.
         if ( (cell_ftr.innerHTML[4] == "F")  || (cell_ftr.innerHTML[4] == "T") || (cell_ftr.innerHTML[4] == "R")){
             return false
         }
@@ -313,6 +316,8 @@ function get_shared_cards() {
     for(var i = 0, row; row = table.rows[i]; i++){
         for(var j = 0, cell ; cell = row.cells[j] ; j++){
             var card = cell.firstChild.getAttribute('id')
+
+
             if (card === null){
                 array.push(0)
                 if(j <= 2){continue}   
@@ -339,26 +344,55 @@ function get_number_of_simulations() {
     return 10**document.getElementById("myRange").value
 }
 
+function string_to_card_number(card) {
+    var card_number
+    if (card[0] == "H"){
+        card_number = Number(card.slice(1, -1))
+    } else if (card[0] == "S"){
+        card_number = Number(card.slice(1, -1)) + 13
+    } else if (card[0] == "D"){
+        card_number = Number(card.slice(1, -1)) + 26
+    } else if (card[0] == "C"){
+        card_number = Number(card.slice(1, -1)) + 39
+    }
+    return card_number
+}
+
 function calculate_button(){
     let game_JSON = {number_of_players: get_number_of_players(),
                     player_cards: get_player_cards(), 
                     shared_cards: get_shared_cards(),
+                    folded_cards: get_folded_cards(),
                     simulations:  get_number_of_simulations()}
-    // console.log(JSON.stringify(game_JSON))
+                    console.log(game_JSON)
     return JSON.stringify(game_JSON)
 }
 
-input = document.getElementById('command');
-result = document.getElementById('result');
-const ws = new WebSocket('ws://localhost:8081')
+function get_folded_cards() {
+    var folded_cards_for_each_player = new Array(fold_array.length).fill(0);
+
+    for(var i = 0 ; i < fold_array.length ; i++) {
+        if (fold_array[i]) {
+            
+            player_td_element = document.getElementById(`${i + 1}_table_element`)
+            if (player_td_element.firstElementChild.classList[0] === 'player') {
+                folded_cards_for_each_player[i] = -1
+            } else if (player_td_element.firstElementChild.classList[0] === 'hidden') {
+                folded_cards_for_each_player[i] = -1
+            } else if (player_td_element.firstElementChild.classList[0] === 'btn') {
+                folded_cards_for_each_player[i] = string_to_card_number(player_td_element.firstElementChild.id )
+            } else {
+                throw "Should not happen"
+            }
+        }
+    }
+    return folded_cards_for_each_player
+}
 
 function sendcommand(){
     ws.send(`${calculate_button()}`)
 }
 
-
-//& I should refactor much of the codebase. It has become too nested.
-var probabilities
 ws.addEventListener('message', (message) => {
     probabilities = JSON.parse(message.data)
     Create_Probability_Table()
@@ -374,59 +408,68 @@ function Create_Probability_Table(){
         header.setAttribute("height", "85")
         header.setAttribute("id", `prod_td_${i + 1}`)
         header.setAttribute("class", "prod_td")
+        header.setAttribute(`onclick`, `fold_player(${i + 1}) ; sendcommand()`)
         header.innerHTML = `<h1 class="prod" id="prod_${i + 1}" style=color:#292c2a;">${(Math.round(probabilities[0][i] * 1000)/10).toFixed(1)}</h1>`;
         document.getElementById("probabilities").appendChild(header)
     }
-    console.log(probabilities[2])
-    //! Change code here to handle different players.
-    make_chart(get_hand_probabilities(probabilities, 1))
+    // console.log(probabilities[2])
+    update_chart(get_hand_probabilities(probabilities, 0))
 }
 
-
-
-function Create_Fold_Buttons(){
-    var table_player
-    var fold_table_left  = document.createElement("td")
-    var fold_table_right = document.createElement("td")
-    fold_table_left.setAttribute("id", "fold_table_left")
-    fold_table_right.setAttribute("id", "fold_table_right")
-    
-    var players = document.getElementById('hidden_table').getElementsByTagName('td').length
-   
-    for(let i = 1 ; i <= players ; i++){
-        fold_button = document.createElement("button")
-        fold_button.setAttribute("id", `fold_button_${i}`)
-        table_player = document.getElementById(`${i}_table_row`)
-        table_player.append(fold_button)
-        table_player.prepend(fold_button)
-     
+function fold_player(p){
+    fold_array[2*p - 2] = !fold_array[2*p - 2]
+    fold_array[2*p - 1] = !fold_array[2*p - 1]
+    var player_td_element_first = document.getElementById(`${2*p - 1}_table_element`)
+    var player_td_element_second = document.getElementById(`${2*p - 0}_table_element`)
+    if (fold_array[2*p - 2]) {
+        player_td_element_first.firstElementChild.classList.add("folded")
+        player_td_element_second.firstElementChild.classList.add("folded")
+    } else {
+        player_td_element_first.firstElementChild.classList.remove("folded")
+        player_td_element_second.firstElementChild.classList.remove("folded")
     }
+
+    return fold_array
 }
 
+//& Jeg er lige ved at være der! Nu skal Julia bare ændres lidt.
+
+//& Over to Julia!
 
 function get_hand_probabilities(probabilities, chosen_player){
-    console.log(probabilities)
     var hand_prob = probabilities[2]
     list_of_hands_probabilities = []
     for(var i = 0 ; i < 9 ; i++){
-        list_of_hands_probabilities.push(hand_prob[i][chosen_player]/get_number_of_simulations())
+        list_of_hands_probabilities.push(hand_prob[i][chosen_player] / get_number_of_simulations())
     }
-    console.log(list_of_hands_probabilities)
     return list_of_hands_probabilities
 }
 
-
-
-
-function make_chart(probs){
-    var ctx = document.getElementById('chart');
-    console.log(probs)
+function update_chart(probs){
     var probs_100 = []
     for(var i = 0 ; i < 9 ; i++ ){
         probs_100.push(probs[i] * 100)  
     }
 
-    new Chart(ctx, {
+    chart1.data.labels = [ 'Straight Flush', 
+    'Four of a Kind', 
+    'Full House', 
+    'Flush', 
+    'Straight', 
+    'Three of a Kind',
+    'Two Pairs',
+    'Two of a Kind',
+    'High Card'];
+    chart1.data.datasets[0].data = probs_100;
+    chart1.update();
+
+}
+
+function make_chart(){
+    var ctx = document.getElementById('chart');
+    var probs = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    chart1 = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: [ 'Straight Flush', 
@@ -440,7 +483,7 @@ function make_chart(probs){
                     'High Card'],
           datasets: [{
             label: 'Probability',
-            data: probs_100,
+            data: probs,
             borderColor: '#DAAB99',
             backgroundColor: '#DAAB99',
             borderWidth: 1
