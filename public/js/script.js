@@ -1,7 +1,6 @@
 input = document.getElementById('command');
 result = document.getElementById('result');
 var fold_array
-const ws = new WebSocket('ws://localhost:8082')
 var probabilities
 
 // TODO fix straight; when player one has a straight there is still a 
@@ -10,6 +9,8 @@ var probabilities
 // TODO Use bar chart to debug 
 // TODO Test ace in straight flush
 
+//& I am quite fustrated by all this at the moment. Really want to make this work.
+//& 
 
 function setPlayers(n) {
     fold_array = new Array(2 * n).fill(false);
@@ -389,6 +390,7 @@ function get_folded_cards() {
     return folded_cards_for_each_player
 }
 
+const ws = new WebSocket('ws://localhost:8081')
 function sendcommand(){
     ws.send(`${calculate_button()}`)
 }

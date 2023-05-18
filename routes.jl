@@ -2,11 +2,14 @@ using Genie
 using Genie.Router
 using Genie.Renderer.Html
 using SimpleWebsockets
+using Pkg
+Pkg.add(url="https://github.com/brunbjerg/Probker.jl")
 using Probker
 using JSON
 
-route("/") do 
-  serve_static_file("probker.html")
+
+route("/") do
+    serve_static_file("probker.html")
 end
 
 function Extract_Game_And_Load_Into_Struct(game_dict)
@@ -17,11 +20,11 @@ function Extract_Game_And_Load_Into_Struct(game_dict)
         game_dict["folded_cards"],
         game_dict["simulations"])
         println(game)
-    return game
-end
+        return game
+    end
 
 server = WebsocketServer()
-listen(server, :client) do ws   
+listen(server, :client) do ws
     listen(ws, :message) do message
         try
             game_dict = JSON.parse(message)
@@ -36,5 +39,4 @@ listen(server, :client) do ws
         end
     end
 end
-
-@async serve(server, 8082)
+@async serve(server, 8081)

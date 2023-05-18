@@ -7,7 +7,7 @@ RUN useradd --create-home --shell /bin/bash genie
 # set up the app
 RUN mkdir /home/genie/app
 COPY . /home/genie/app
-#COPY ./Probker /home/genie/.julia/dev/Probker
+COPY ./Probker.jl /home/genie/.julia/dev/Probker.jl
 WORKDIR /home/genie/app
 
 # configure permissions
@@ -22,15 +22,14 @@ USER genie
 
 # instantiate Julia packages
 
-RUN mkdir /home/genie/.julia
-RUN mkdir /home/genie/.julia/dev
-RUN cp -r /home/genie/app/Probker /home/genie/.julia/dev
-RUN julia -e "using Pkg; Pkg.develop(\"Probker\"); Pkg.activate(\".\"); Pkg.instantiate(); Pkg.precompile();"
-# RUN julia -e "using Pkg; Pkg.activate(\".\"); Pkg.instantiate(); Pkg.precompile(); "
+# RUN mkdir /home/genie/.julia
+# RUN mkdir /home/genie/.julia/dev
+RUN cp -r /home/genie/app/Probker.jl /home/genie/.julia/packages
+RUN julia -e "using Pkg; Pkg.activate(\".\") ; Pkg.develop(path=\"Probker.jl\") ; Pkg.instantiate() ; Pkg.precompile();"
 
 # ports
 EXPOSE 8000
-EXPOSE 80
+EXPOSE 8000
 
 # set up app environment
 ENV JULIA_DEPOT_PATH "/home/genie/.julia"
@@ -41,7 +40,7 @@ ENV WSPORT "8000"
 ENV EARLYBIND "true"
 
 # run app
-CMD ["bin/server"]
+CMD ["bin/repl"]
 
 # or maybe include a Julia file
 # CMD julia -e 'using Pkg; Pkg.activate("."); include("Probker.jl"); '

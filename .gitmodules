@@ -1,0 +1,3 @@
+[submodule "packages/Probker.jl"]
+	path = packages/Probker.jl
+	url = https://github.com/brunbjerg/Probker.jl
