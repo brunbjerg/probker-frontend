@@ -28,19 +28,16 @@ RUN cp -r /home/genie/app/Probker.jl /home/genie/.julia/packages
 RUN julia -e "using Pkg; Pkg.activate(\".\") ; Pkg.develop(path=\"Probker.jl\") ; Pkg.instantiate() ; Pkg.precompile();"
 
 # ports
-EXPOSE 8000
-EXPOSE 8000
+EXPOSE 8080
+EXPOSE 8081
 
 # set up app environment
 ENV JULIA_DEPOT_PATH "/home/genie/.julia"
 ENV GENIE_ENV "dev"
 ENV GENIE_HOST "0.0.0.0"
-ENV PORT "8000"
-ENV WSPORT "8000"
+ENV PORT "8080"
+ENV WSPORT "8081"
 ENV EARLYBIND "true"
 
 # run app
-CMD ["bin/repl"]
-
-# or maybe include a Julia file
-# CMD julia -e 'using Pkg; Pkg.activate("."); include("Probker.jl"); '
+CMD ["bin/server"]

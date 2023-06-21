@@ -381,7 +381,7 @@ function get_folded_cards() {
             } else if (player_td_element.firstElementChild.classList[0] === 'hidden') {
                 folded_cards_for_each_player[i] = -1
             } else if (player_td_element.firstElementChild.classList[0] === 'btn') {
-                folded_cards_for_each_player[i] = string_to_card_number(player_td_element.firstElementChild.id )
+                folded_cards_for_each_player[i] = string_to_card_number(player_td_element.firstElementChild.id)
             } else {
                 throw "Should not happen"
             }
@@ -390,8 +390,10 @@ function get_folded_cards() {
     return folded_cards_for_each_player
 }
 
-const ws = new WebSocket('ws://localhost:8081')
+const ws = new WebSocket('ws://127.0.0.1:8081')
+console.log("After websocket initialization")
 function sendcommand(){
+    console.log("Inside of send command function")
     ws.send(`${calculate_button()}`)
 }
 

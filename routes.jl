@@ -27,6 +27,7 @@ server = WebsocketServer()
 listen(server, :client) do ws
     listen(ws, :message) do message
         try
+            
             game_dict = JSON.parse(message)
             game = Extract_Game_And_Load_Into_Struct(game_dict)
             probabilities = Simulate(game)
@@ -35,8 +36,10 @@ listen(server, :client) do ws
             send(ws, probabilities_JSON)
         catch err
             @info err
+            @p "Error"
             send(ws, "Could not run command")
         end
     end
 end
+
 @async serve(server, 8081)
