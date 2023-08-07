@@ -371,7 +371,6 @@ function calculate_button(){
 
 function get_folded_cards() {
     var folded_cards_for_each_player = new Array(fold_array.length).fill(0);
-
     for(var i = 0 ; i < fold_array.length ; i++) {
         if (fold_array[i]) {
             
@@ -390,10 +389,45 @@ function get_folded_cards() {
     return folded_cards_for_each_player
 }
 
-const ws = new WebSocket('ws://127.0.0.1:8081')
+ws.onerror = function(error) {
+    console.log('WebSocket Error: ', error);
+};
+
+// Replace with your server's domain and port
+var ws = new WebSocket("ws://localhost:8080/ws");
+
+// Connection opened
+ws.addEventListener('open', function (event) {
+    ws.send('Hello Server!');
+});
+
+// Listen for messages
+ws.addEventListener('message', function (event) {
+    sendcommand()
+    console.log('Message from server: ', event.data);
+});
+
+// Connection closed
+ws.addEventListener('close', function (event) {
+    console.log('Server closed connection: ', event);
+});
+
+// Connection error
+ws.addEventListener('error', function (event) {
+    console.log('Error: ', event);
+});
+
+
+
+
+
+
 console.log("After websocket initialization")
 function sendcommand(){
     console.log("Inside of send command function")
+    ws.onerror = function(error) {
+  console.log('WebSocket Error: ', error);
+};
     ws.send(`${calculate_button()}`)
 }
 
@@ -436,10 +470,6 @@ function fold_player(p){
     return fold_array
 }
 
-//& Jeg er lige ved at være der! Nu skal Julia bare ændres lidt.
-
-//& Over to Julia!
-
 function get_hand_probabilities(probabilities, chosen_player){
     var hand_prob = probabilities[2]
     list_of_hands_probabilities = []
@@ -466,7 +496,6 @@ function update_chart(probs){
     'High Card'];
     chart1.data.datasets[0].data = probs_100;
     chart1.update();
-
 }
 
 function make_chart(){
@@ -502,3 +531,5 @@ function make_chart(){
         }
       });
 }
+
+// What should I do about this? Follow the ChatGPT suggestions 
