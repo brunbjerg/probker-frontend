@@ -21,8 +21,9 @@ RUN chmod +x bin/runtask
 USER genie
 
 # instantiate Julia packages
-RUN cp -r /home/genie/app/Probker.jl /home/genie/.julia/packages
-RUN julia -e "using Pkg; Pkg.activate(\".\") ; Pkg.develop(path=\"Probker.jl\") ; Pkg.instantiate() ; Pkg.precompile();"
+RUN julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
+# RUN cp -r /home/genie/app/Probker.jl /home/genie/.julia/packages
+# RUN julia -e "using Pkg; Pkg.activate(\".\") ; Pkg.develop(path=\"Probker.jl\") ; Pkg.instantiate() ; Pkg.precompile();"
 
 # ports
 EXPOSE 8081
@@ -33,7 +34,7 @@ ENV JULIA_DEPOT_PATH "/home/genie/.julia"
 ENV GENIE_ENV "dev"
 ENV GENIE_HOST "0.0.0.0"
 ENV PORT "8081"
-ENV WSPORT "8082"
+# ENV WSPORT "8082"
 ENV EARLYBIND "true"
 
 # run app

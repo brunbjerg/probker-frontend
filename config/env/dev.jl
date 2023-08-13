@@ -12,4 +12,4 @@ Genie.Configuration.config!(
   watch                           = true
 )
 
-ENV["JULIA_REVISE"] = "auto"
+ENV["JULIA_REVISE"] = "true"

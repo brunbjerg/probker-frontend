@@ -2,7 +2,7 @@ module ProbkerApp
   using Genie
   using Pkg
   # Pkg.add(url="https://github.com/brunbjerg/Probker.jl")
-  using Probker
+  #using Probker
   const up = Genie.up
   export up
 

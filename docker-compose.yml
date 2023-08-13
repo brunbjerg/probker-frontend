@@ -11,5 +11,8 @@ services:
 
   julia-app:
     build: .
+    image: gcr.io/probker-cloud-run/julia-app:1.0
     expose:
       - "8081"
+    volumes:
+      - .:/app

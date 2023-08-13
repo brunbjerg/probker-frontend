@@ -370,6 +370,9 @@ function calculate_button(){
 }
 
 function get_folded_cards() {
+    if (!fold_array) {
+        fold_array = []
+    }
     var folded_cards_for_each_player = new Array(fold_array.length).fill(0);
     for(var i = 0 ; i < fold_array.length ; i++) {
         if (fold_array[i]) {
@@ -387,14 +390,15 @@ function get_folded_cards() {
         }
     }
     return folded_cards_for_each_player
+
 }
 
-ws.onerror = function(error) {
-    console.log('WebSocket Error: ', error);
-};
+// ws.onerror = function(error) {
+//     console.log('WebSocket Error: ', error);
+// };
 
 // Replace with your server's domain and port
-var ws = new WebSocket("ws://localhost:8080/ws");
+var ws = new WebSocket("ws://192.168.0.7:8080/ws");
 
 // Connection opened
 ws.addEventListener('open', function (event) {
@@ -402,9 +406,14 @@ ws.addEventListener('open', function (event) {
 });
 
 // Listen for messages
-ws.addEventListener('message', function (event) {
-    sendcommand()
-    console.log('Message from server: ', event.data);
+// ws.addEventListener('message', function (event) {
+//     sendcommand()
+//     console.log('Message from server: ', event.data);
+// });
+ws.addEventListener('message', (message) => {
+    probabilities = JSON.parse(message.data)
+    Create_Probability_Table()
+    console.log('Message from server ', probabilities);
 });
 
 // Connection closed
@@ -418,24 +427,14 @@ ws.addEventListener('error', function (event) {
 });
 
 
-
-
-
-
 console.log("After websocket initialization")
 function sendcommand(){
     console.log("Inside of send command function")
     ws.onerror = function(error) {
-  console.log('WebSocket Error: ', error);
-};
+        console.log('WebSocket Error: ', error);
+    };
     ws.send(`${calculate_button()}`)
 }
-
-ws.addEventListener('message', (message) => {
-    probabilities = JSON.parse(message.data)
-    Create_Probability_Table()
-    console.log('Message from server ', probabilities);
-});
 
 function Create_Probability_Table(){
     document.getElementById("probabilities").innerHTML = ''
